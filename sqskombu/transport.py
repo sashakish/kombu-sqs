@@ -3,6 +3,7 @@ from kombu.transport import virtual
 
 from boto.sqs.connection import SQSConnection
 from boto.sqs.message import Message
+from boto.sqs.regioninfo import RegionInfo
 from anyjson import serialize, deserialize
 
 import socket
@@ -10,6 +11,7 @@ import time
 
 #TODO how to make this configurable?
 THROTTLE = 30 #only poll every 30 seconds
+AWS_SQS_DEFAULT_REGION = SQSRegionInfo(name='us-west-1', endpoint='us-west-1.queue.amazonaws.com')
 
 class Channel(virtual.Channel):
     def normalize_queue_name(self, queue):
@@ -66,7 +68,7 @@ class Channel(virtual.Channel):
     
     def _open(self):
         conninfo = self.connection.client
-        return SQSConnection(conninfo.userid, conninfo.password)
+        return SQSConnection(conninfo.userid, conninfo.password, region = AWS_SQS_DEFAULT_REGION )
     
     @property
     def client(self):
