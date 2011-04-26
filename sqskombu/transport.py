@@ -3,7 +3,7 @@ from kombu.transport import virtual
 
 from boto.sqs.connection import SQSConnection
 from boto.sqs.message import Message
-from boto.sqs.regioninfo import RegionInfo
+from boto.sqs.regioninfo import SQSRegionInfo
 from anyjson import serialize, deserialize
 
 import socket
